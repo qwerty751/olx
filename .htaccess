@@ -1,0 +1,7 @@
+RewriteEngine On
+Options +FollowSymlinks
+#RewriteBase /perl2/perl/olx/
+RewriteBase  /~user7/olx/
+DirectoryIndex index.cgi
+
+RewriteRule ^(.*)$ index.cgi [L]
