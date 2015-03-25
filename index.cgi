@@ -8,9 +8,13 @@ use Data::Dumper;
 use constant TDIR=>'';
 #use lib TDIR;
 use Models::Utilits::Date;
+use Models::Utilits::Debug;
 
 
-#use lib '/usr/home/user7/public_html/olx/';
+my $debug = Models::Utilits::Debug->new();
+
+
+
 
 
 use Controllers::CommandCtrl::Router;
@@ -26,7 +30,7 @@ sub main
     
    my $rout =Controllers::CommandCtrl::Router->new();
     
-   #my($t)=router();
+   
    my($t)=$rout->go(TDIR);
 
    if($t)
@@ -37,6 +41,10 @@ sub main
    {
        print "no page";
    }
+    
+   my $d=$debug->getMsg();
+   print '<hr>Debug:<br> <pre>', Dumper(\$d),'</pre>';
+   
 
 }
 

@@ -1,15 +1,15 @@
 package Controllers::CommandCtrl::Router;
 
-
-use vars qw(%INC);
+#use utf8;
+use Encode;
 use warnings;
 use strict;
 use Models::Utilits::File;
 use Data::Dumper;
+use Models::Utilits::Debug;
 
 
-
-
+my $debug = Models::Utilits::Debug->new();
 sub new
 {
     my $class = ref($_[0])||$_[0];
@@ -19,6 +19,7 @@ sub new
 
 sub go
 {   
+
     my ($self,$tdir)=@_;
 
     my @sname=split /\//, $ENV{'SCRIPT_NAME'} ;
@@ -47,7 +48,7 @@ sub go
        $url=  ucfirst($url);
     }
 
-    print $url."\n";
+    #print $url."\n";
     #print Dumper $url ;
 
     #print Dumper(\%INC); 
@@ -60,11 +61,13 @@ sub go
     #my  $me='/home/alexandr/www/html/olx/Controllers/CtrlPages/'.$url.'.pm';
     my $me =$tdir.'Controllers/CtrlPages/'.$url.'.pm';
     my $f= Models::Utilits::File->new();
-    
+    #$me=decode('utf8',$me);    
     unless($f->isfile($me))
     {
       #  return 0;
-      print "\n no file! \n"
+      $debug->setMsg('no file');
+      #print "\n no file! \n"
+      return 0;
     }
     
     print "goodfil:$me! \n "; 
@@ -73,14 +76,20 @@ sub go
     print 
     #eval{ require '/home/alexandr/www/html/olx/Controllers/CtrlPages/Index.pm' ;};
     eval{ require $me ;};
-    print $@."\n";
-    
-    $me=~ s/\//::/g;
+    if($@)
+    {   
+        $debug->setMsg($@);
+    }
+
+       
+    #$me=~ s/\//::/g;
     #require "/home/alexandr/www/html/olx/$me";
     my $r; 
     eval { $r= "Controllers::CtrlPages::$url"->new();};
-    print $@;
-    return 0; 
+    if($@)
+    {   
+        $debug->setMsg($@);
+    }
     return $r;
 
 
