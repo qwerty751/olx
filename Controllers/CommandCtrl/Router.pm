@@ -7,6 +7,8 @@ use strict;
 use Models::Utilits::File;
 use Data::Dumper;
 use Models::Utilits::Debug;
+use Models::Utilits::GetRout;
+use Models::Utilits::Date;
 
 
 my $debug = Models::Utilits::Debug->new();
@@ -21,17 +23,8 @@ sub go
 {   
 
     my ($self,$tdir)=@_;
-
-    my @sname=split /\//, $ENV{'SCRIPT_NAME'} ;
-
-    my $test= $ENV{'REQUEST_URI'} ;
-
-    for(@sname)
-    {   
-        $test=~s/$_\///;
-        #print $_ ;
-    }
-    my @rout = split /\//, $test;
+    my $date = Models::Utilits::Date->new();
+    my @rout =Models::Utilits::GetRout->get() ;
     #print Dumper \@rout;
     #return @rout;
     my $tt=@rout;
@@ -48,48 +41,31 @@ sub go
        $url=  ucfirst($url);
     }
 
-    #print $url."\n";
-    #print Dumper $url ;
-
-    #print Dumper(\%INC); 
-    
-    
-    #my  $me='Controllers/CtrlPages/'.$url.'pm';
-
-    
-        
-    #my  $me='/home/alexandr/www/html/olx/Controllers/CtrlPages/'.$url.'.pm';
     my $me =$tdir.'Controllers/CtrlPages/'.$url.'.pm';
     my $f= Models::Utilits::File->new();
     #$me=decode('utf8',$me);    
     unless($f->isfile($me))
     {
-      #  return 0;
-      $debug->setMsg('no file');
-      #print "\n no file! \n"
+      $debug->setMsg('no file'); 
       return 0;
     }
     
-    print "goodfil:$me! \n "; 
-    #$me="$tdir/Controllers/CtrlPages/Index.pm";
-
-    print 
-    #eval{ require '/home/alexandr/www/html/olx/Controllers/CtrlPages/Index.pm' ;};
-    eval{ require $me ;};
+    
+    eval{ require $me ;};#подключаем файл
     if($@)
     {   
         $debug->setMsg($@);
     }
 
        
-    #$me=~ s/\//::/g;
-    #require "/home/alexandr/www/html/olx/$me";
+   
     my $r; 
-    eval { $r= "Controllers::CtrlPages::$url"->new();};
+    eval { $r= "Controllers::CtrlPages::$url"->new($rout[1]);}; #передаем параметр  
     if($@)
     {   
         $debug->setMsg($@);
     }
+    $date->{'nextpage'}=$url;
     return $r;
 
 

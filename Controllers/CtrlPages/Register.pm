@@ -1,5 +1,6 @@
 #user8
 package Controllers::CtrlPages::Register;
+use vars my(%IN);
 use CGI;
 use Models::Validators::ValidForm;
 use CGI qw(:cgi-lib :escapeHTML :unescapeHTML);
@@ -11,6 +12,9 @@ use Data::Dumper;
 #$query = new CGI;
 $| = 1;
 ReadParse();
+#use Models::Validators::ValidForm;
+my $query = new CGI;
+use Data::Dumper;
 sub new
 {   
     my $class = ref($_[0])||$_[0];
@@ -18,6 +22,7 @@ sub new
 }
 
 sub go
+
 {   
  
     my $html = loadTemplate('Controllers/CtrlPages/reg_form.html');
@@ -25,6 +30,9 @@ sub go
     # print Dumper \%in;
 
 }
+{
+    print '<br>me testi111<br>';
+    print Dumper \%IN;
 
 sub loadTemplate
 {
@@ -53,6 +61,16 @@ sub checkForm()
 
     my $valid = "Models::Validators::ValidForm"->new();
     $valid -> validForm($fname, $lname, $email, $pass, $conf_pass, $phone);
+    #read(STDIN, $buffer, $ENV{'CONTENT_LENGTH'});
+    #@pairs = split(/&/,$buffer);
+    #foreach $pair(@pairs) 
+    #{
+    #	($name, $value) = split(/=/,$pair);
+    #	$value =~ tr/+/ /;
+    #		$value =~ s/%([a-fA-F0-9] [a-fA-F0-9])/pack("C", hex($1))/ge;
+    #	$FORM{$name} = $value; 
+    #}
+    #$valid = "Models::Validators::ValidForm"->new(\%FORM);
 }
 
 

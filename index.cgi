@@ -9,12 +9,14 @@ use constant TDIR=>'';
 #use lib TDIR;
 use Models::Utilits::Date;
 use Models::Utilits::Debug;
+<<<<<<< HEAD
 use Data::Dumper;
 use vars qw(%IN);
+=======
+use Views::View;
+
+>>>>>>> 751632e4ae45c4cb60b4de4f6afb9ba719a504ed
 my $debug = Models::Utilits::Debug->new();
-
-
-
 
 
 use Controllers::CommandCtrl::Router;
@@ -24,6 +26,12 @@ sub main
     
     my $date = Models::Utilits::Date->new();
     
+    $date->{'db'}{'name'}='user7';
+    $date->{'db'}{'pass'}='tuser7';
+    $date->{'db'}{'host'}='localhost';
+    $date->{'db'}{'dbname'}='user7';
+
+
     print "Content-type: text/html; encoding='utf-8'\n\n";
     #print '<pre>', Dumper(\%ENV) , '</pre> <hr />'; 
 
@@ -35,16 +43,26 @@ sub main
 
    if($t)
    {
-       $t->go();
+        $t->go();
+        
    }
    else
    {
-       print "no page";
+       #print "no page";
+       $date->{'nextpage'}='Error';
    }
     
+<<<<<<< HEAD
    my $d=$debug->getMsg();
    print '<hr>Debug:<br> <pre>', Dumper(\$d),'</pre>';
     print Dumper \%IN;
+=======
+    my $view = Views::View->new();
+    $view->go();
+   
+    
+      
+>>>>>>> 751632e4ae45c4cb60b4de4f6afb9ba719a504ed
 
 }
 

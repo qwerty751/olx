@@ -1,11 +1,6 @@
 package Models::Utilits::File;
 use Data::Dumper;
 
-#$|=1;
-#use vars qw(%IN);
-
-#my($workdir)= shift;
-#my $tdir=''; 
 #user7 Ткачук
 
 
@@ -20,11 +15,7 @@ sub new
 sub isfile
 {
      
-    #my $r=`pwd`;
-    
-    #print $workdir;
-    #print Dumper(Cwd()); 
-    
+        
     
     
 
@@ -41,6 +32,22 @@ sub isfile
 }
 
 
+sub getFile
+{
+    my($self,$file) = @_;
+    
+    unless($self->isfile($file))
+    {
+        
+        return 0;
+    }
+
+    local $/=undef;
+    open my $fh , "<$file" or return 0;
+    my $text = <$fh>;
+    close $fh;
+    return $text;
+}
 
 
 1;

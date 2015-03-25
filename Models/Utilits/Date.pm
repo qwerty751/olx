@@ -13,7 +13,9 @@ sub new
     my $class = ref($_[0])||$_[0];
     $self||=bless({
             'tdir'=>'',#текущий путь
-            'err' =>{}
+            'err' =>{},
+            'nextpage'=>'',
+            'db'=>{}
         },$class);
 
     return $self;
