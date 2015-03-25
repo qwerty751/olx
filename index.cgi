@@ -9,8 +9,8 @@ use constant TDIR=>'';
 #use lib TDIR;
 use Models::Utilits::Date;
 use Models::Utilits::Debug;
-
-
+use Data::Dumper;
+use vars qw(%IN);
 my $debug = Models::Utilits::Debug->new();
 
 
@@ -44,7 +44,7 @@ sub main
     
    my $d=$debug->getMsg();
    print '<hr>Debug:<br> <pre>', Dumper(\$d),'</pre>';
-   
+    print Dumper \%IN;
 
 }
 

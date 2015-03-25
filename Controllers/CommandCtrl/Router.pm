@@ -36,7 +36,7 @@ sub go
     #return @rout;
     my $tt=@rout;
     #print $tt;
-    my $url=$rout[$tt-1];
+    my $url=$rout[0];
     #$url='inde3';
     if(length($url)==0)
     {
