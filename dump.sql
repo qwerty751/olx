@@ -28,3 +28,8 @@ CREATE TABLE `olx_posts` (
     price INT NOT NULL,     
     status INT(1) NOT NULL DEFAULT '1'
 );
+
+CREATE TABLE `olx_sessions` (
+     id CHAR(32) NOT NULL PRIMARY KEY,
+     a_session TEXT NOT NULL
+);

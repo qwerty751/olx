@@ -21,7 +21,12 @@ sub new
 
 sub go
 {   
- 
+    if($in {'submit'}) 
+    {
+        checkForm();
+    }
+
+
     #my $html = loadTemplate('Controllers/CtrlPages/reg_form.html');
     #print $html.'<hr />';
 }
@@ -36,10 +41,6 @@ sub loadTemplate
     return $html;    
 }
 
-if($in {'submit'}) 
-{
-    checkForm();
-}
 
 sub checkForm()
 {

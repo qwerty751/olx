@@ -7,14 +7,14 @@ use Models::Utilits::Date;
 use Models::Utilits::Debug;
 use Models::Utilits::File;
 use Data::Dumper;
-
+use Models::Utilits::UseClass;
 $|=1;
 
 my $date = Models::Utilits::Date->new();
 sub new
 {
     my $class = ref($_[0])||$_[0];
-    return bless({      },$class);
+    return bless({'pallett'=>undef },$class);
 }
 
 
@@ -28,7 +28,12 @@ sub go()
 
     if($html)
     {
+        $self->{'pallett'}=Models::Utilits::UseClass->_getCls('Views/Palletts/',
+            $date->{'nextpage'}
+            ,undef );
         $html=$self->ReplaceF($html);
+        $html=$self->ReplaceH($html);
+        
         print $html; 
     }
     else
@@ -52,12 +57,19 @@ sub loadTemplate
 
 sub ReplaceH
 {
+    my($self,$text)=@_;
 
-    my %hash=( 'test'=>'good'  );
-    #print $_[0];
-    $_[0]=~s/%%(\w+)%%/$hash{$1}/ge;
+    unless( $self->{'pallett'})
+    {
+        return $text; #'no pallet';
+    } 
     
-    return $_[0];
+    $self->{'pallett'}->createHash();
+
+
+    $text=~s/%%(\w+)%%/$self->{'pallett'}->{$1}/ge;
+
+    return $text;
 
 }
 
@@ -66,27 +78,19 @@ sub ReplaceF
 {
     my($self,$text)=@_;
 
-
-    $text=~s/##(\w+)##/$self->$1()/ge;
-
+    unless( $self->{'pallett'})
+    {
+        return $text; #'no pallet';
+    } 
+    #print $self->{'pallett'}->viewdebug();
+    #$text=~s/##(\w+)##/$self->$1()/ge;
+    $text=~s/##(\w+)##/$self->{'pallett'}->$1()/ge;
     return $text;
 
 }
 
 
 
-
-
-sub viewdebug
-{
-    
-    my($self)=@_;   
-    my $debug = Models::Utilits::Debug->new();
-    my $d=$debug->getMsg();
-    return  Dumper(\$d);
-
-
-}
 
 
 

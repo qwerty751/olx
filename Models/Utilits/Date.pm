@@ -12,9 +12,10 @@ sub new
     
     my $class = ref($_[0])||$_[0];
     $self||=bless({
-            'tdir'=>'',#текущий путь
             'err' =>{},
-            'nextpage'=>'',
+            'nextpage'=>'',#следующая страница
+            'pageparam'=>undef,#парам для страницы
+            'warings'=>{}, #предупреждения
             'db'=>{}
         },$class);
 

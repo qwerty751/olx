@@ -1,21 +1,23 @@
 package Controllers::CommandCtrl::Router;
 
+#user7 
+
 #use utf8;
 use Encode;
 use warnings;
 use strict;
-use Models::Utilits::File;
-use Data::Dumper;
+#use Models::Utilits::File;
+#use Data::Dumper;
 use Models::Utilits::Debug;
 use Models::Utilits::GetRout;
 use Models::Utilits::Date;
-
+use Models::Utilits::UseClass;
 
 my $debug = Models::Utilits::Debug->new();
 sub new
 {
     my $class = ref($_[0])||$_[0];
-    return bless({      },$class);
+    return bless({},$class);
 }
 
 
@@ -40,35 +42,13 @@ sub go
     {
        $url=  ucfirst($url);
     }
-
-    my $me =$tdir.'Controllers/CtrlPages/'.$url.'.pm';
-    my $f= Models::Utilits::File->new();
-    $me=decode('utf8',$me);    
-    unless($f->isfile($me))
-    {
-      $debug->setMsg('no file'); 
-      return 0;
-    }
     
     
-    eval{ require $me ;};#подключаем файл
-    if($@)
-    {   
-        $debug->setMsg($@);
-    }
-
-       
-   
-    my $r; 
-    eval { $r= "Controllers::CtrlPages::$url"->new($rout[1]);}; #передаем параметр  
-    if($@)
-    {   
-        $debug->setMsg($@);
-    }
+    my $temp =Models::Utilits::UseClass->_getCls('Controllers/CtrlPages/',$url,$rout[1] );
     $date->{'nextpage'}=$url;
-    return $r;
-
-
+    $date->{'pageparam'}=$rout[1];
+    return $temp;
+    #########################
 }
 
 

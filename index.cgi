@@ -4,6 +4,8 @@ use warnings;
 use strict;
 use Data::Dumper;
 use File::Basename;
+use Config::Config;
+use File::Basename;
 # текущяя дериктория
 #use constant TDIR=>'/home/alexandr/www/html/olx/'; 
 use constant TDIR=>dirname(__FILE__);
@@ -11,6 +13,8 @@ use lib TDIR;
 use Models::Utilits::Date;
 use Models::Utilits::Debug;
 use Views::View;
+
+Config::Config->setDir(TDIR);
 
 my $debug = Models::Utilits::Debug->new();
 
@@ -56,7 +60,9 @@ sub main
     #my $d=$debug->getMsg();
     #print  Dumper(\$d);
     #print TDIR;
+    #Config::Config->setDir(77);
 
+    print Config::Config->getDir();
 }
 
 
