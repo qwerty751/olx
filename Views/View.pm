@@ -22,7 +22,7 @@ sub go()
 {
     my ($self,$tdir)=@_;
     #print "Content-type: text/html; encoding='utf-8'\n\n";
-    my $templete='Resources/html/'.$date->{'nextpage'}.'.html';
+    my $templete=$tdir.'Resources/html/'.$date->{'nextpage'}.'.html';
     #print $templete;
     my $html=$self->loadTemplate($templete);
 
@@ -35,7 +35,7 @@ sub go()
     {   
         $date->{'nextpage'}='Error';
         #$self->go($tdir);
-        print "no file";
+        #print "no file";
     }
 }
 

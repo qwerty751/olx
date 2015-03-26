@@ -3,9 +3,10 @@
 use warnings;
 use strict;
 use Data::Dumper;
+use File::Basename;
 # текущяя дериктория
-use constant TDIR=>'/home/alexandr/www/html/olx/'; 
-#use constant TDIR=>'';
+#use constant TDIR=>'/home/alexandr/www/html/olx/'; 
+use constant TDIR=>dirname(__FILE__);
 use lib TDIR;
 use Models::Utilits::Date;
 use Models::Utilits::Debug;
@@ -34,7 +35,7 @@ sub main
    my $rout =Controllers::CommandCtrl::Router->new();
     
    
-   my($t)=$rout->go(TDIR);
+   my($t)=$rout->go(TDIR.'/');
 
    if($t)
    {
@@ -48,10 +49,13 @@ sub main
    }
     
     my $view = Views::View->new();
-    $view->go(TDIR);
+    $view->go(TDIR.'/');
    
     
-      
+    #my $debug = Models::Utilits::Debug->new();
+    #my $d=$debug->getMsg();
+    #print  Dumper(\$d);
+    #print TDIR;
 
 }
 

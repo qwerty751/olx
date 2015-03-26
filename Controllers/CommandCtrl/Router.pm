@@ -43,7 +43,7 @@ sub go
 
     my $me =$tdir.'Controllers/CtrlPages/'.$url.'.pm';
     my $f= Models::Utilits::File->new();
-    #$me=decode('utf8',$me);    
+    $me=decode('utf8',$me);    
     unless($f->isfile($me))
     {
       $debug->setMsg('no file'); 
