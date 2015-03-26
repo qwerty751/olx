@@ -7,12 +7,10 @@ use CGI qw(:cgi-lib :escapeHTML :unescapeHTML);
 use CGI::Carp qw(fatalsToBrowser);
 use vars qw(%in);
 use Data::Dumper;
+use Models::Interfaces::Sql;
 
-#use form_register;
-#$query = new CGI;
 $| = 1;
 ReadParse();
-#use Models::Validators::ValidForm;
 my $query = new CGI;
 use Data::Dumper;
 sub new
@@ -22,17 +20,11 @@ sub new
 }
 
 sub go
-
 {   
  
-    my $html = loadTemplate('Controllers/CtrlPages/reg_form.html');
-    print $html.'<hr />';
-    # print Dumper \%in;
-
+    #my $html = loadTemplate('Controllers/CtrlPages/reg_form.html');
+    #print $html.'<hr />';
 }
-{
-    print '<br>me testi111<br>';
-    print Dumper \%IN;
 
 sub loadTemplate
 {
@@ -46,7 +38,6 @@ sub loadTemplate
 
 if($in {'submit'}) 
 {
-    #print Dumper \%in;
     checkForm();
 }
 
@@ -58,19 +49,27 @@ sub checkForm()
     my $pass = $in{'pass'};
     my $conf_pass = $in{'conf_pass'};
     my $phone = $in{'phone'};
-
     my $valid = "Models::Validators::ValidForm"->new();
-    $valid -> validForm($fname, $lname, $email, $pass, $conf_pass, $phone);
-    #read(STDIN, $buffer, $ENV{'CONTENT_LENGTH'});
-    #@pairs = split(/&/,$buffer);
-    #foreach $pair(@pairs) 
-    #{
-    #	($name, $value) = split(/=/,$pair);
-    #	$value =~ tr/+/ /;
-    #		$value =~ s/%([a-fA-F0-9] [a-fA-F0-9])/pack("C", hex($1))/ge;
-    #	$FORM{$name} = $value; 
-    #}
-    #$valid = "Models::Validators::ValidForm"->new(\%FORM);
+    my $check = $valid -> validForm($fname, $lname, $email, $pass, $conf_pass, $phone);
+    if ($check eq 1)
+    {
+         $sql = "INSERT INTO olx_users (first_name, last_name, pass, email,
+         phone) VALUES ('$fname', '$lname', '$pass',
+         '$email', $phone)";
+
+         #rint $sql;
+    ($db = Models::Interfaces::Sql->new('user7', 'localhost', 'user7', 'tuser7'))
+    && ($db -> connect())
+    && ($db -> setQuery($sql))
+    && ($db -> execute())
+    && ($cnt = $db -> getRows());
+    print Dumper \$cnt;
+    print  $db -> getError();
+    }
+    else 
+    {
+    print Dumper  \$check;
+    }
 }
 
 
