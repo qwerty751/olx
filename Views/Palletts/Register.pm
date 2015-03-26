@@ -1,12 +1,22 @@
 package Views::Palletts::Register;
-use Models::Utilits::Date;
-use Data::Dumper;
+#use Models::Utilits::Date;
+#use Data::Dumper;
 use warnings;
 use strict;
 
+use vars qw(@ISA); 
+
+our @ISA = qw(Views::Palletts::Index);
+require Views::Palletts::Index;
 
 
-sub new
+#use base qw(Views::Palletts::Index);
+#our @ISA = "Index";
+use Models::Utilits::Date;
+use Data::Dumper;
+
+
+sub new2
 {
     my $class = ref($_[0])||$_[0];
     return bless({  },$class);
