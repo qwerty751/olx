@@ -4,23 +4,16 @@ package Views::Palletts::Register;
 use warnings;
 use strict;
 
-use vars qw(@ISA); 
 
+#три строчки которые делают наследие 
+use vars qw(@ISA); 
 our @ISA = qw(Views::Palletts::Index);
 require Views::Palletts::Index;
 
 
-#use base qw(Views::Palletts::Index);
-#our @ISA = "Index";
 use Models::Utilits::Date;
-use Data::Dumper;
 
 
-sub new2
-{
-    my $class = ref($_[0])||$_[0];
-    return bless({  },$class);
-}
 
 
 #запускаеться когад нужно мунять на хеши
@@ -33,17 +26,6 @@ sub createHash
 }
 
 
-#пример функции которая в запуститься если в шаюлоне встретит ##viewdubug##
-sub viewdebug
-{
-    
-    my($self)=@_;   
-    my $debug = Models::Utilits::Debug->new();
-    my $d=$debug->getMsg();
-    return  Dumper(\$d);
-     
-    
-}
 
 
 
