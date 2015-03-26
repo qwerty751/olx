@@ -4,18 +4,13 @@ use warnings;
 use strict;
 use Data::Dumper;
 # текущяя дериктория
-#use constant TDIR=>'/home/alexandr/www/html/olx/'; 
-use constant TDIR=>'';
-#use lib TDIR;
+use constant TDIR=>'/home/alexandr/www/html/olx/'; 
+#use constant TDIR=>'';
+use lib TDIR;
 use Models::Utilits::Date;
 use Models::Utilits::Debug;
-<<<<<<< HEAD
-use Data::Dumper;
-use vars qw(%IN);
-=======
 use Views::View;
 
->>>>>>> 751632e4ae45c4cb60b4de4f6afb9ba719a504ed
 my $debug = Models::Utilits::Debug->new();
 
 
@@ -52,17 +47,11 @@ sub main
        $date->{'nextpage'}='Error';
    }
     
-<<<<<<< HEAD
-   my $d=$debug->getMsg();
-   print '<hr>Debug:<br> <pre>', Dumper(\$d),'</pre>';
-    print Dumper \%IN;
-=======
     my $view = Views::View->new();
-    $view->go();
+    $view->go(TDIR);
    
     
       
->>>>>>> 751632e4ae45c4cb60b4de4f6afb9ba719a504ed
 
 }
 
