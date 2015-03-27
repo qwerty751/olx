@@ -4,37 +4,33 @@ package Controllers::CtrlPages::Category;
 use strict;
 use warnings;
 use Data::Dumper;
-use Models::Categories;
+use Models::Utilits::Date;
+use Models::Performers::Category;
 
-my($cat);
 
+my $param;
 sub new()
 {   
-	my $cat = new Models::Categories;
+	$param = $_[1];
     my $class = ref($_[0])||$_[0];
     return bless({},$class);
 
-	#my ($proto, $category) = @_;
-	#my $class = ref($proto) || $proto;
-	#my $this->{category} = $category;
-	#print "yess";
-    #print "create test ggg id=".$_[1]."\n"; 
-	#my $class = ref($_[0])||$_[0];
-    #return bless({      },$class);
-}
+	}
 
-sub getAllCategories
+sub go
 {
-    my($self) = shift;
-    my $result = $cat->getAllCategories();
-    return $result;
-}
+    my ($self)=@_;
+    
+    
+    my $cat =  Models::Performers::Category->new();
+    unless($cat->getCatName($param))
+    {
+            my $date = Models::Utilits::Date->new();
+            $date->{'nextpage'}='Error';
+            return 0;
+    }
+        
 
-sub getSubCategories
-{
-    my($self) = shift;
-    my $result = $cat->getSubCategories();
-    return $result;
 }
 
 

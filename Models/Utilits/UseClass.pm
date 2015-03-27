@@ -29,7 +29,8 @@ sub _getCls($$$)
     
     my $filepath=decode('utf8',$tdir.'/'.$me);
     
-    eval{ require $me ;};#подключаем файл
+    #print $filepath."\n";
+    eval{ require $filepath ;};#подключаем файл
     if($@)
     {   
         $debug->setMsg($@);

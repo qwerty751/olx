@@ -5,6 +5,8 @@ use Models::Utilits::Debug;
 use Data::Dumper;
 use Models::Utilits::Date;
 use Models::Interfaces::Sql;
+use Config::Config;
+use Models::Performers::Userme;
 
 sub new
 {
@@ -42,7 +44,11 @@ sub listCats
 {
     my $sql;
     my $result;
-    (($sql = Models::Interfaces::Sql->new('user7','localhost','user7','tuser7')) 
+    (($sql = Models::Interfaces::Sql->new(
+        Config::Config::DBUSER,
+        Config::Config::DBHOST,
+        Config::Config::DBNAME,
+        Config::Config::DBPASS)) 
         && ($sql->connect())
         && ($sql->setQuery("SELECT * FROM olx_categories"))
         && ($sql->execute())
@@ -50,7 +56,7 @@ sub listCats
         
         && ($sql->DESTROY()))||
     (
-        #($err=$sql->getError()) && 
+        (print $sql->getError()) && 
         ($sql->DESTROY())    
     );
     
@@ -69,18 +75,24 @@ sub listCats
 
 
 }
-(($sql =  Modules::sql->new('user7','localhost','user7','tuser7')) 
-        && ($sql->connect())
-        && ($sql->setQuery("SELECT * FROM anketa"))
-        && ($sql->execute())
-        && ($result = $sql->getResult())
-        
-        && ($sql->DESTROY()))||
-    (
-        (print $sql->getError()) && 
-        ($sql->DESTROY())    
-    );
 
+
+
+sub loginuser
+{
+    #выводи имя пользователя если пользовотель в системе иначе слово вход
+    my $user =  Models::Performers::Userme->new();
+    
+    my $name='Вход';
+    if($user->isLogin())
+    {
+        $name=$user->getName();
+    
+    }
+
+    return "<a href='Userme'>$name</a>";
+
+}
 
 sub AUTOLOAD
 {

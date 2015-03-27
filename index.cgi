@@ -4,16 +4,21 @@ use warnings;
 use strict;
 use Data::Dumper;
 use File::Basename;
-use Config::Config;
-use File::Basename;
+$|=1;
+
 # текущяя дериктория
 #use constant TDIR=>'/home/alexandr/www/html/olx/'; 
 use constant TDIR=>dirname(__FILE__);
 use lib TDIR;
+use lib TDIR.'/Models/Utilits';
 use Models::Utilits::Date;
 use Models::Utilits::Debug;
 use Views::View;
-
+use Config::Config;
+use CGI qw(:cgi-lib :escapeHTML :unescapeHTML);
+#use CGI::Carp qw(fatalsToBrowser); # позволит выводить ошибки в браузер
+use Models::Utilits::Sessionme;
+use CGI::Session;
 Config::Config->setDir(TDIR);
 
 my $debug = Models::Utilits::Debug->new();
@@ -31,8 +36,13 @@ sub main
     $date->{'db'}{'host'}='localhost';
     $date->{'db'}{'dbname'}='user7';
 
+    my $cgi = CGI->new;
+    my $session =  Models::Utilits::Sessionme->new();
+    
+    my $cookie = $cgi->cookie(CGISESSID => $session->getId());
+    print $cgi->header( -cookie=>$cookie, -charset=>'utf-8');
 
-    print "Content-type: text/html; encoding='utf-8'\n\n";
+    #print "Content-type: text/html; encoding='utf-8'\n\n";
     #print '<pre>', Dumper(\%ENV) , '</pre> <hr />'; 
 
     
@@ -56,13 +66,13 @@ sub main
     $view->go(TDIR.'/');
    
     
-    #my $debug = Models::Utilits::Debug->new();
-    #my $d=$debug->getMsg();
-    #print  Dumper(\$d);
+    my $debug = Models::Utilits::Debug->new();
+    my $d=$debug->getMsg();
+    print  Dumper(\$d);
     #print TDIR;
     #Config::Config->setDir(77);
-
-    print Config::Config->getDir();
+    print $date->{'nextpage'};
+    #print Config::Config->getDir();
 }
 
 

@@ -32,7 +32,7 @@ sub go
     my $tt=@rout;
     #print $tt;
     my $url=$rout[0];
-    #$url='inde3';
+    #$url='Userme';
     if(length($url)==0)
     {
         $url='Index';
@@ -43,9 +43,9 @@ sub go
        $url=  ucfirst($url);
     }
     
-    
-    my $temp =Models::Utilits::UseClass->_getCls('Controllers/CtrlPages/',$url,$rout[1] );
     $date->{'nextpage'}=$url;
+    my $temp =Models::Utilits::UseClass->_getCls('Controllers/CtrlPages/',$url,$rout[1] );
+    #$date->{'nextpage'}=$url;
     $date->{'pageparam'}=$rout[1];
     return $temp;
     #########################

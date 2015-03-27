@@ -15,7 +15,7 @@ sub new
             'err' =>{},
             'nextpage'=>'',#следующая страница
             'pageparam'=>undef,#парам для страницы
-            'warings'=>{}, #предупреждения
+            'warings'=>undef, #предупреждения
             'db'=>{}
         },$class);
 
