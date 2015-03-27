@@ -79,18 +79,24 @@ sub listCats
 
 
 sub loginuser
-{
+{   
+    #print '!@@@';
     #выводи имя пользователя если пользовотель в системе иначе слово вход
     my $user =  Models::Performers::Userme->new();
-    
+     
     my $name='Вход';
+    my $exit ='';
     if($user->isLogin())
     {
         $name=$user->getName();
+        $exit='<form action="Userme" method="POST">
+            <input type="hidden" value=1 name="exit" >
+            <input type="submit" value="exit"> 
+        </form>'; 
+     
+    }    
     
-    }
-
-    return "<a href='Userme'>$name</a>";
+    return "<a href='Userme'>$name</a> $exit";
 
 }
 

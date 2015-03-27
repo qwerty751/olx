@@ -10,11 +10,13 @@
         <hr />
         <h1>Вход</h1>
         <p><b>##warings##</b></p>
-        <form method="POST">
+        <form method="POST" action="userme"  >
             <p>email:   <input type="text"  name="email"> <br /></p>
             <p>pass:  <input type="password" name="pass" ></br></p>
-                <input type="hidden" name="login" value=1 >
-                <p>       <input type="submit"></p>
+            <input type="hidden" name="login" value=1 >
+
+            <p>       <input type="submit"></p>
+            <p> <a href="register">Регистрация</a></p>
         </form>
     </body>
 </html>

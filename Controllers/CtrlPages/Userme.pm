@@ -31,13 +31,21 @@ sub go
     
     #print Dumper \%in;
     my $date = Models::Utilits::Date->new();
- 
+
     if($user->isLogin())
-    {
-        #переходим в личный кабинет
-        $date->{'nextpage'}='Userme';
-        return 1;
- 
+    {   
+
+        unless($in{'exit'})
+        {
+            #переходим в личный кабинет
+            $date->{'nextpage'}='Userme';
+            return 1;
+        }
+        
+
+        $user->logout();
+        
+
     }
 
     

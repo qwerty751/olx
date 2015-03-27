@@ -31,7 +31,7 @@ sub new
 
 
 
-#id 
+#select categorie name by id 
 sub getCatName($)
 {
     my($self,$id)=@_;
@@ -62,6 +62,14 @@ sub getCatName($)
     return $result; 
     
 }
+
+sub getCatByName
+{
+    return 1;
+}
+
+
+
 
 
 
@@ -96,6 +104,33 @@ sub getLisrSubCat($)
         
     return $result; 
     
+}
+
+
+sub getAllList
+
+{
+
+    my($self)=@_;
+
+    my $result;
+    ($self->{'sql'}->setQuery("SELECT idSub, sub_name FROM olx_subCategories  "))
+    && ($self->{'sql'}->execute())
+    && ($result=$self->{'sql'}->getResult())||
+
+    (
+        ($debug->setMsg( $self->{'sql'}->getError()))
+    );
+
+
+
+    if($result)
+    {
+        return $result;
+    }
+
+    return $result; 
+
 }
 
 

@@ -75,7 +75,7 @@ sub getParam($)
 {
     my ($self,$param)=@_;
     
-    print 'Get='.$tdir."\n";
+    #print 'Get='.$tdir."\n";
     return $self->{'session'}->param($param);
 
 }

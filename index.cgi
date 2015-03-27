@@ -47,21 +47,23 @@ sub main
 
     
    my $rout =Controllers::CommandCtrl::Router->new();
-    
+   
+   #print "!!"; 
    
    my($t)=$rout->go(TDIR.'/');
-
+   #print "!!";
    if($t)
    {
+       #print "!!?";
         $t->go();
-        
+                
    }
    else
    {
-       #print "no page";
+       print "no page";
        $date->{'nextpage'}='Error';
    }
-    
+   #print "??#";
     my $view = Views::View->new();
     $view->go(TDIR.'/');
    

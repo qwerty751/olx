@@ -31,6 +31,7 @@ sub go()
         $self->{'pallett'}=Models::Utilits::UseClass->_getCls('Views/Palletts/',
             $date->{'nextpage'}
             ,undef );
+        
         $html=$self->ReplaceF($html);
         $html=$self->ReplaceH($html);
         

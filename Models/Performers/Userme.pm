@@ -31,7 +31,7 @@ sub new
         {   
             'sql'=>$sql,
             'name'=>undef,
-            'emain'=>undef,
+            'email'=>undef,
             'id'=>undef 
         }   
         ,$class);
@@ -96,7 +96,7 @@ sub isLogin()
 
     my ($self)=@_;
      
-    print 'mail='.$session->getParam('email').' id='.$session->getId();
+    #print 'mail='.$session->getParam('email').' id='.$session->getId();
 
 
     if($self->{'name'})
@@ -110,10 +110,14 @@ sub isLogin()
 
     if($session->getParam('email'))
     {
-        $self->{'email'}=$session->gettParam('email');
-        $self->{'id'}=$session->gettParam('id');
-        $self->{'name'}=$session->gettParam('name');
+        $self->{'email'}=$session->getParam('email');
+        $self->{'id'}=$session->getParam('id');
+        $self->{'name'}=$session->getParam('name');
+        
+        #print '???';
+        
         return 1;
+        
 
     }
 
@@ -140,6 +144,20 @@ sub getemail
     my ($self)=@_;
 
     return $self->{'email'};
+}
+
+
+sub logout
+{
+    my ($self)=@_;
+
+    $session->setParam('email',undef);
+    $session->delete();
+    $self->{'email'}= undef;
+    $self->{'name'}= undef;
+    $self->{'id'}= undef;
+    #print "good";
+    return 1;
 }
 
 
