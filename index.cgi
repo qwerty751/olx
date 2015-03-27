@@ -37,7 +37,7 @@ sub main
     $date->{'db'}{'dbname'}='user7';
 
     my $cgi = CGI->new;
-    my $session =  Models::Utilits::Sessionme->new();
+    my $session =  Models::Utilits::Sessionme->new($cgi);
     
     my $cookie = $cgi->cookie(CGISESSID => $session->getId());
     print $cgi->header( -cookie=>$cookie, -charset=>'utf-8');

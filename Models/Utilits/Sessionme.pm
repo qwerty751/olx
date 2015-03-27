@@ -15,7 +15,8 @@ my $tdir;
 
 sub new
 {   
-
+        
+    
        my $class = ref($_[0])||$_[0];
          Config::Config->getDir();
        my $session;
@@ -26,7 +27,7 @@ sub new
        #print $tdir;
        $tdir=Config::Config->getDir();
 
-        $session = new CGI::Session("driver:File",undef, {Directory=>$tdir.'/tmp'});
+        $session = new CGI::Session("driver:File",$_[1], {Directory=>'/tmp'});
        
 
         #print "create sses";
