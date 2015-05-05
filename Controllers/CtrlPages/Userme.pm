@@ -12,7 +12,8 @@ use Models::Utilits::Email::Valid;
 use CGI qw(:cgi-lib :escapeHTML :unescapeHTML);
 #use CGI::Carp qw(fatalsToBrowser); # позволит выводить ошибки в браузер
 use Models::Performers::Userme;
-
+use Models::Performers::Post;
+use Digest::MD5 qw(md5_hex);
 ReadParse();
 
 sub new()
@@ -68,6 +69,12 @@ sub go
 
 
 
+}
+if($in{'id'})
+{
+    my($id) = $in{'id'};
+    Models::Performers::Post->post2Archive($id);
+    print 'post deleted';
 }
 
 

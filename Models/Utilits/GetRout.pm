@@ -18,9 +18,9 @@ sub get
         #print $_ ;
     }
     my @rout = split /\//, $test;
-
+	print $test;
     return @rout;
-
+	
 }
 
 

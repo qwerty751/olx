@@ -22,7 +22,7 @@ sub createHash
 
     my ($self)=@_;
     $self->{'page'}=$date->{'nextpage'};
-    $self->{'title'}='Главня';
+    $self->{'title'}='<a href="index">Главня</a>';
 }
 
 
@@ -94,9 +94,8 @@ sub loginuser
             <input type="submit" value="exit"> 
         </form>'; 
      
-    }    
-    
-    return "<a href='Userme'>$name</a> $exit";
+    }     
+    return "<a href='index'>Главня</a></br> "." <a href='Userme'>$name</a> $exit";
 
 }
 

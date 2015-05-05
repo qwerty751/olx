@@ -36,6 +36,19 @@ sub getPostById
     return $result;
 }
 
+sub getPosts
+{
+    my $db;
+    my $result;
+    my($id) = $_[1];
+    ($db = Models::Interfaces::Sql->new('user7', 'localhost', 'user7', 'tuser7'))
+    && ($db -> connect())
+    && ($db -> setQuery("SELECT p.title, p.description, p.idUser, u.first_name FROM olx_posts p INNER JOIN olx_users u ON p.idUser = u.idUser WHERE p.idSub = $id"))
+    && ($db -> execute())
+    && ($result = $db -> getResult());
+    return $result;
+}
+
 sub post2Archive
 {
      my $db;

@@ -8,6 +8,7 @@ use CGI::Carp qw(fatalsToBrowser);
 use vars qw(%in);
 use Data::Dumper;
 use Models::Interfaces::Sql;
+use Digest::MD5 qw(md5_hex);
 
 $| = 1;
 ReadParse();
@@ -54,8 +55,9 @@ sub checkForm()
     my $check = $valid -> validForm($fname, $lname, $email, $pass, $conf_pass, $phone);
     if ($check eq 1)
     {
+        $new_pass = md5_hex($pass);
          $sql = "INSERT INTO olx_users (first_name, last_name, pass, email,
-         phone) VALUES ('$fname', '$lname', '$pass',
+         phone) VALUES ('$fname', '$lname', '$new_pass',
          '$email', $phone)";
 
          #rint $sql;

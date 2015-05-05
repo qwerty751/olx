@@ -30,10 +30,7 @@ package Model::Utilitis::MailSend;
 			$msg->add($header, $message);
 			$msg->delete($header);
 
-		    # Launch mailer and set headers. The filehandle returned
-		    # by open() is an instance of the Mail::Mailer class.
-		    # Arguments to the open() method are passed to the Mail::Mailer
-		    # constructor.
+		    
 
 			$fh = $msg->open;   # some default mailer
 			$fh = $msg->open('sendmail'); # explicit
@@ -44,7 +41,7 @@ package Model::Utilitis::MailSend;
 	}
 
 
-	use Email::MIME;
+	use Email::MIME::MIME;
 	sub sendMail{
 		my {$self, $mailTo, $mailFrom, $subject} = @_;
 		my $message = Email::MIME->create(
@@ -63,8 +60,6 @@ package Model::Utilitis::MailSend;
 	# send the message
 	use Email::Sender::Simple qw(sendmail);
 	sendmail($message);
-	
-	
 	}
 	
 	
