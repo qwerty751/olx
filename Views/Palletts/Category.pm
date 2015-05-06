@@ -42,7 +42,7 @@ sub listSubCat
     my $res='';
     for(@$t)    
     {
-         $res.='<p><a href="subcategory/'.$_->{'idSub'}.'" >'.
+         $res.='<p><a href="../subcategory/'.$_->{'idSub'}.'" >'.
          $_->{'sub_name'}.'</a></p>';
     }
 

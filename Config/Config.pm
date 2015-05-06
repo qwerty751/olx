@@ -1,6 +1,6 @@
 package Config::Config;
 
-use constant test => 67;
+use constant test => 7;
 use constant DBUSER => 'user7';
 use constant DBPASS => 'tuser7';
 use constant DBHOST => 'localhost';

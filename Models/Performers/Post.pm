@@ -1,5 +1,5 @@
 package Models::Performers::Post;
-
+#user 8 
 use strict;
 
 use Models::Utilits::Debug;
@@ -10,7 +10,7 @@ use Config::Config;
 
 sub addPost ()
 {
-     my $db;
+    my $db;
     my ($idUser) = $_[1];
     my ($idSub) = $_[2];
     my ($title) = $_[3];
@@ -43,7 +43,7 @@ sub getPosts
     my($id) = $_[1];
     ($db = Models::Interfaces::Sql->new('user7', 'localhost', 'user7', 'tuser7'))
     && ($db -> connect())
-    && ($db -> setQuery("SELECT p.title, p.description, p.idUser, u.first_name FROM olx_posts p INNER JOIN olx_users u ON p.idUser = u.idUser WHERE p.idSub = $id"))
+    && ($db -> setQuery("SELECT p.idPost, p.title, p.description, p.idUser, u.first_name FROM olx_posts p INNER JOIN olx_users u ON p.idUser = u.idUser WHERE p.idSub = $id AND p.status=1"  ))
     && ($db -> execute())
     && ($result = $db -> getResult());
     return $result;

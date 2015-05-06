@@ -1,5 +1,5 @@
 package Models::Performers::Userme;
-
+#user 7
 use warnings;
 use strict;
 
@@ -9,11 +9,10 @@ use Models::Utilits::Date;
 use Models::Interfaces::Sql;
 use Config::Config;
 use Models::Utilits::Sessionme;
+use Digest::MD5 qw(md5_hex);
+
 my $session =  Models::Utilits::Sessionme->new();
-
 my $debug = Models::Utilits::Debug->new();
-
-
 my $self;
 
 sub new
@@ -61,7 +60,7 @@ sub login($$)
     (
         ($self->{'sql'}->setQuery("SELECT  idUser, first_name, last_name,   email,  phone 
                 FROM olx_users
-                where pass = '$pass' 
+                where pass = '".md5_hex($pass)."' 
                 AND email = '$email' 
                 LIMIT  1 ")) &&
         ($self->{'sql'}->execute())

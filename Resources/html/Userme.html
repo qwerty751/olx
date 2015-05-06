@@ -2,16 +2,23 @@
 "http://www.w3.org/TR/html4/strict.dtd">
 <html>
     <head>
+        <base>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>%%catname%%</title>
     </head>
     <body>
         <h1>##loginuser## </h1>
         <hr />
-        Список постов
-        <br> Добавить пост
-        <p>
-        ##listpost##
-        </p> 
+            <!--a href="listpost">Список постов</a-->
+        <br>
+        <a href="addpost">Добавить пост</a>
+        <table border='1'>
+            <thead>
+                <th>Название</th>
+                <th>Описание</th>
+                <th>Отправить в архив</th>
+            </thead>
+            ##listpost##
+        </table> 
         </body>
 </html>

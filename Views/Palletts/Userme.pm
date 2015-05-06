@@ -2,7 +2,7 @@ package Views::Palletts::Userme;
 #user7
 use warnings;
 use strict;
-
+use Models::Performers::Userme;
 use Models::Utilits::Date;
 use Data::Dumper;
 use Models::Performers::Post;
@@ -15,18 +15,27 @@ require Views::Palletts::Index;
 
 sub listpost
 {
-    
-    my $post= Models::Performers::Post->getListPosts2User(1);
+    my ($self)=@_;
+    my $td = $self->loadtemplate('help/td');
+    my $tdForm = $self->loadtemplate('help/tdform');
+    my $tr = $self->loadtemplate('help/tr');
+    my $user =  Models::Performers::Userme->new();
+    my $idU = $user->getid();
+    my $post= Models::Performers::Post->getListPosts2User($idU);
     #print Dumper  $post;
     
     my $res='';
     
     for(@$post)
     {
-        $res.='<p><b> '.$_->{'title'}.'</b><span>'.$_->{'description'}.'
-        <form method="post">
-        <input type="text" hidden name="id" value="'.$_->{'idPost'}.'" />
-        <input type="submit" value="delete" /></form></p>';
+        my $temp ='';
+        
+        $temp.=$self->render($td, {'value'=>$_->{'title'}});
+        $temp.=$self->render($td, {'value'=>$_->{'description'}});
+        $temp.=$self->render($tdForm, {'id'=>$_->{'idPost'} });
+        
+        $res.=$self->render($tr, {'value'=>$temp});
+        #$res.=$temp;
     }
 
     return $res;

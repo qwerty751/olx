@@ -7,6 +7,7 @@ use Models::Utilits::Date;
 use Models::Interfaces::Sql;
 use Config::Config;
 use Models::Performers::Userme;
+use Models::Utilits::File;
 
 sub new
 {
@@ -29,13 +30,10 @@ sub createHash
 #пример функции которая в запуститься если в шаюлоне встретит ##viewdubug##
 sub viewdebug
 {
-    
     my($self)=@_;   
     my $debug = Models::Utilits::Debug->new();
     my $d=$debug->getMsg();
     return  Dumper(\$d);
-     
-    
 }
 
 
@@ -82,21 +80,44 @@ sub loginuser
 {   
     #print '!@@@';
     #выводи имя пользователя если пользовотель в системе иначе слово вход
+    my($self)=@_;
+    
     my $user =  Models::Performers::Userme->new();
      
     my $name='Вход';
     my $exit ='';
+    my $iu = $self->loadtemplate('help/infouser');
     if($user->isLogin())
     {
         $name=$user->getName();
-        $exit='<form action="Userme" method="POST">
-            <input type="hidden" value=1 name="exit" >
-            <input type="submit" value="exit"> 
-        </form>'; 
-     
-    }     
-    return "<a href='index'>Главня</a></br> "." <a href='Userme'>$name</a> $exit";
+        $exit = $self->loadtemplate('help/exitform');; 
+    }
+    my $ret = $self->render($iu, {'name'=>$name, 'exit'=>$exit }); 
+    return $ret;
+}
 
+sub loadtemplate
+{
+    my($self,$filename)=@_;
+    my $tdir =  Config::Config->getDir();
+    my $file = Models::Utilits::File->new();
+    my $fullpath = $tdir.'/Resources/html/'.$filename.'.html';
+    my $html = $file->getFile($fullpath);
+    return $html; 
+}
+
+
+sub render
+{
+    my($self,$text,$hash)=@_;
+
+    unless( $hash)
+    {
+        return $text; #no hash ;
+    } 
+    
+    $text=~s/%%(\w+)%%/$hash->{$1}/ge;
+    return $text;
 }
 
 sub AUTOLOAD

@@ -49,14 +49,22 @@ sub main
    my $rout =Controllers::CommandCtrl::Router->new();
    
    #print "!!"; 
-   
+   my $debug = Models::Utilits::Debug->new();
    my($t)=$rout->go(TDIR.'/');
    #print "!!";
    if($t)
    {
        #print "!!?";
-        $t->go();
-                
+     eval
+     {
+          $t->go();
+     };
+     
+     if($@)
+     {
+          $debug->setMsg($@);
+     }
+                    
    }
    else
    {
@@ -64,11 +72,20 @@ sub main
        $date->{'nextpage'}='Error';
    }
    #print "??#";
-    my $view = Views::View->new();
-    $view->go(TDIR.'/');
-   
+    my $view ;
     
-    my $debug = Models::Utilits::Debug->new();
+    eval
+    {
+      $view = Views::View->new();
+      $view->go(TDIR.'/');
+    };
+     
+     if($@)
+     {
+          $debug->setMsg($@);
+     }
+     
+    
     my $d=$debug->getMsg();
     print  Dumper(\$d);
     #print TDIR;

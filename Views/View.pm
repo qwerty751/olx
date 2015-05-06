@@ -22,6 +22,7 @@ sub go()
 {
     my ($self,$tdir)=@_;
     #print "Content-type: text/html; encoding='utf-8'\n\n";
+    
     my $templete=$tdir.'Resources/html/'.$date->{'nextpage'}.'.html';
     #print $templete;
     my $html=$self->loadTemplate($templete);
@@ -51,8 +52,6 @@ sub loadTemplate
     my $file = Models::Utilits::File->new();
     my $html = $file->getFile($filename); 
     return $html;
-
-
 }
 
 
