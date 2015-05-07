@@ -197,8 +197,9 @@ sub Sendmail
 
     my $test =0 ;
     eval{
-    $test = $msg->send('smtp','mx1.hostinger.com.ua',
-               AuthUser=>'test@assembler.wc.lt', AuthPass=>'mymail', Port=>2525);
+        #$test = $msg->send('smtp','mx1.hostinger.com.ua',
+        #       AuthUser=>'test@assembler.wc.lt', AuthPass=>'mymail', Port=>2525);
+        $test =  $msg->send;
     };
     
     

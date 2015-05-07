@@ -11,15 +11,16 @@ my $msg = MIME::Lite->new(
     From     =>'test@assembler.wc.lt',
     To       =>'alexandrtai@gmail.com',
     # Cc       =>'some@other.com, some@more.com',
-    Subject  =>'Helloooooo3, nurse!?',
+    Subject  =>'test hosting max!?',
     Data     =>"How's it goin', eh?"
 );
 
 
 my $test =0 ;
 eval{
-$test = $msg->send('smtp','mx1.hostinger.com.ua',Debug=>1,
-           AuthUser=>'test@assembler.wc.lt', AuthPass=>'mymail', Port=>2525);
+    #$test = $msg->send('smtp','mx1.hostinger.com.ua',Debug=>1,
+    #       AuthUser=>'test@assembler.wc.lt', AuthPass=>'mymail', Port=>2525);
+    $test =  $msg->send;
 };
 
 
