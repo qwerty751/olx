@@ -33,6 +33,7 @@ sub createHash
          $self->{'description'}=$t->[0]{'description'};
          $self->{'authorname'}=$t->[0]{'first_name'};
          $self->{'authorid'}=$t->[0]{'idUser'};
+         $self->{'price'}=$t->[0]{'price'};
          
 }
 

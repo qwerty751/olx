@@ -50,11 +50,4 @@ sub listSubCat
 
     return $res;
 }
-
-
-
-
-
-
 1;
-

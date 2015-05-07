@@ -9,6 +9,7 @@ use Models::Utilits::Date;
 use Models::Interfaces::Sql;
 use Config::Config;
 use Models::Utilits::Sessionme;
+use MIME::Lite;
 use Digest::MD5 qw(md5_hex);
 
 my $session =  Models::Utilits::Sessionme->new();
@@ -159,5 +160,51 @@ sub logout
     return 1;
 }
 
+
+sub Sendmail
+{
+    my($self,$id,$from,$text)=@_;
+    my $result;
+    (
+        ($self->{'sql'}->setQuery("SELECT  idUser, first_name, last_name,   email,  phone 
+                FROM olx_users
+                WHERE idUser = $id
+                LIMIT  1 ")) &&
+        ($self->{'sql'}->execute())
+        && ($result=$self->{'sql'}->getResult())
+    )||
+
+    (
+        ($debug->setMsg( $self->{'sql'}->getError()))
+    );
+    
+    unless($result)
+    {
+        return 0;
+    }
+    my $mail = $result->[0]{'email'};
+    #print Dumper $result->[0]{'email'};
+    
+        
+    my $msg = MIME::Lite->new(
+        From     =>$from,
+        To       =>$mail,
+        # Cc       =>'some@other.com, some@more.com',
+        Subject  =>'me-olx messege',
+        Data     =>$text
+    );
+
+
+    my $test =0 ;
+    eval{
+    $test = $msg->send('smtp','mx1.hostinger.com.ua',
+               AuthUser=>'test@assembler.wc.lt', AuthPass=>'mymail', Port=>2525);
+    };
+    
+    
+    print "good test = $test \n<br>";
+    print $mail;
+    return $test;
+}
 
 1;

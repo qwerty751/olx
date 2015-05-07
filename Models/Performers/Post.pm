@@ -30,7 +30,7 @@ sub getPostById
     my ($id) = $_[1];
     ($db = Models::Interfaces::Sql->new('user7', 'localhost', 'user7', 'tuser7'))
     && ($db -> connect())
-    && ($db -> setQuery("SELECT p.title, p.description, p.idUser, u.first_name FROM olx_posts p INNER JOIN olx_users u ON p.idUser = u.idUser WHERE p.idPost = $id"))
+    && ($db -> setQuery("SELECT p.price, p.title, p.description, p.idUser, u.first_name FROM olx_posts p INNER JOIN olx_users u ON p.idUser = u.idUser WHERE p.idPost = $id"))
     && ($db -> execute())
     && ($result = $db -> getResult());
     return $result;
@@ -51,8 +51,8 @@ sub getPosts
 
 sub post2Archive
 {
-     my $db;
-     my $result;
+    my $db;
+    my $result;
     my ($id) = $_[1];
     ($db = Models::Interfaces::Sql->new('user7', 'localhost', 'user7', 'tuser7'))
     && ($db -> connect())
@@ -74,6 +74,5 @@ sub getListPosts2User
     && ($result = $db -> getResult());
     return $result;
 }
-
 
 1;

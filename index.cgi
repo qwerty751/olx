@@ -11,6 +11,7 @@ $|=1;
 use constant TDIR=>dirname(__FILE__);
 use lib TDIR;
 use lib TDIR.'/Models/Utilits';
+use lib TDIR.'/Libs';
 use Models::Utilits::Date;
 use Models::Utilits::Debug;
 use Views::View;
@@ -47,14 +48,10 @@ sub main
 
     
    my $rout =Controllers::CommandCtrl::Router->new();
-   
-   #print "!!"; 
    my $debug = Models::Utilits::Debug->new();
    my($t)=$rout->go(TDIR.'/');
-   #print "!!";
    if($t)
    {
-       #print "!!?";
      eval
      {
           $t->go();
@@ -71,7 +68,7 @@ sub main
        print "no page";
        $date->{'nextpage'}='Error';
    }
-   #print "??#";
+
     my $view ;
     
     eval
@@ -93,6 +90,5 @@ sub main
     print $date->{'nextpage'};
     #print Config::Config->getDir();
 }
-
 
 main();

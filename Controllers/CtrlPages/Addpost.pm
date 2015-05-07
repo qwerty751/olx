@@ -50,7 +50,8 @@ sub go
             ($in{'idSub'})&&
             ($in{'title'} )&&
             ($in{'info'} )&&
-            ($in{'price'} )&& 
+            ($in{'price'} )&&
+            (int($in{'price'}))&&
              ( Models::Performers::Post->addPost($user->getid(),
               $in{'idSub'}, $in{'title'} , $in{'info'} ,$in{'price'}))&&
         ( $date->{'warings'}=1)
